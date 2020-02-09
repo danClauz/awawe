@@ -1,0 +1,5 @@
+ALTER TABLE comments
+    DROP CONSTRAINT FK_Users;
+
+ALTER TABLE comments
+    DROP CONSTRAINT FK_Posts;
