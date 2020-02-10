@@ -4,8 +4,8 @@ import (
 	config "awawe/configuration"
 	"awawe/infrastucture/router"
 	"context"
-	"fmt"
 	"github.com/labstack/echo"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -25,7 +25,7 @@ func startServer(e *echo.Echo) {
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
-	fmt.Println("Server listen at http://" + config.GetServerConfig().Host + ":" + config.GetServerConfig().Port)
+	log.Println("Server listen at http://" + config.GetServerConfig().Host + ":" + config.GetServerConfig().Port)
 	<-quit
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
