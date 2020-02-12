@@ -1,9 +1,10 @@
 package registry
 
 import (
-	"awawe/infrastucture/redis"
-	ip "awawe/interface/presenter"
-	ir "awawe/interface/repository"
+	config "awawe/configuration"
+	ip "awawe/delivery/presenter"
+	ir "awawe/delivery/repository"
+	"awawe/infrastructure/redis"
 	"awawe/usecase/interactor"
 	up "awawe/usecase/presenter"
 	ur "awawe/usecase/repository"
@@ -15,7 +16,14 @@ func NewUserInteractor(db *sql.DB) interactor.UserInteractor {
 }
 
 func newUserRepository(db *sql.DB) ur.UserRepository {
-	return ir.NewUserRepository(db, redis.NewRedisClient())
+	redisConfig := config.GetRedisConfig()
+	return ir.NewUserRepository(db, redis.NewRedisClient().
+		SetAddress(redisConfig.Address).
+		SetDatabase(redisConfig.DB).
+		SetPassword(redisConfig.Password).
+		SetTimeout(redisConfig.ReadTimeout, redisConfig.WriteTimeout).
+		SetPoolSize(redisConfig.PoolSize).
+		Call())
 }
 
 func newUserPresenter() up.UserPresenter {
