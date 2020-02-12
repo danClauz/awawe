@@ -1,7 +1,6 @@
 package redis
 
 import (
-	"encoding/json"
 	"github.com/go-redis/redis"
 	"time"
 )
@@ -16,12 +15,7 @@ func (c *sdk) Ping() error {
 }
 
 func (c *sdk) Set(key string, value interface{}, expiration time.Duration) error {
-	byteValue, err := json.Marshal(value)
-	if err != nil {
-		return err
-	}
-
-	if _, err := c.redisClient.Set(key, byteValue, expiration).Result(); err != nil {
+	if _, err := c.redisClient.Set(key, value.(string), expiration).Result(); err != nil {
 		return err
 	}
 
