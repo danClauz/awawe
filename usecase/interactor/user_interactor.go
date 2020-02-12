@@ -13,6 +13,7 @@ type userInteractor struct {
 }
 
 type UserInteractor interface {
+	Store(ctx context.Context, user *dto.User) error
 	StoreToRedis(ctx context.Context, user *dto.User) error
 	FindAll(ctx context.Context) ([]*dto.User, error)
 	GetByID(ctx context.Context, ID int) (*dto.User, error)
@@ -23,6 +24,14 @@ func NewUserInteractor(r repository.UserRepository, p presenter.UserPresenter) U
 		userRepository: r,
 		userPresenter:  p,
 	}
+}
+
+func (in *userInteractor) Store(ctx context.Context, user *dto.User) error {
+	if err := in.userRepository.Store(ctx, in.userPresenter.RequestToModel(user)); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (in *userInteractor) StoreToRedis(ctx context.Context, user *dto.User) error {
