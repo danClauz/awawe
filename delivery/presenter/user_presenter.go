@@ -6,10 +6,15 @@ import (
 	"awawe/usecase/presenter"
 )
 
-type userPresenter struct{}
+type userPresenter struct {
+	post presenter.PostPresenter
+}
 
 func NewUserPresenter() presenter.UserPresenter {
-	return &userPresenter{}
+	post := new(postPresenter)
+	return &userPresenter{
+		post: post,
+	}
 }
 
 func (pre *userPresenter) RequestToModel(user *dto.User) *model.User {
@@ -19,17 +24,23 @@ func (pre *userPresenter) RequestToModel(user *dto.User) *model.User {
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Email:     user.Email,
-		Password:  user.Password,
 	}
 }
 
 func (pre *userPresenter) ResponseUser(user *model.User) *dto.User {
-	return &dto.User{
+	response := &dto.User{
+		ID:        user.ID,
 		Username:  user.Username,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Email:     user.Email,
 	}
+
+	if user.Posts != nil {
+		response.Posts = pre.post.ResponsePosts(user.Posts)
+	}
+
+	return response
 }
 
 func (pre *userPresenter) ResponseUsers(users []*model.User) []*dto.User {
