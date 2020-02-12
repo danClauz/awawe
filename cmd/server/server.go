@@ -2,7 +2,7 @@ package server
 
 import (
 	config "awawe/configuration"
-	"awawe/infrastucture/router"
+	"awawe/delivery/router"
 	"context"
 	"github.com/labstack/echo"
 	"log"
