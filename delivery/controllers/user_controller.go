@@ -8,6 +8,21 @@ import (
 	"strconv"
 )
 
+func StoreUser(svc interactor.UserInteractor) echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		user := new(dto.User)
+		if err := ctx.Bind(user); err != nil {
+			return err
+		}
+
+		if err := svc.Store(ctx.Request().Context(), user); err != nil {
+			return err
+		}
+
+		return ctx.JSON(http.StatusOK, nil)
+	}
+}
+
 func StoreUserToRedis(svc interactor.UserInteractor) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		user := new(dto.User)
