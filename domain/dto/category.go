@@ -7,5 +7,5 @@ type Category struct {
 	CategoryName string    `json:"category_name"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
-	Posts        []*Post   `json:"posts"`
+	Posts        []*Post   `json:"posts,omitempty"`
 }
