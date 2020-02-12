@@ -3,7 +3,7 @@ package router
 import (
 	config "awawe/configuration"
 	"awawe/delivery/controllers"
-	"awawe/infrastucture/datastore"
+	"awawe/infrastructure/datastore"
 	"awawe/registry"
 	"awawe/usecase/interactor"
 	"github.com/labstack/echo"
@@ -35,7 +35,8 @@ func NewRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 
 	// User API
-	e.POST("/user", controllers.StoreUserToRedis(user))
+	e.POST("/user", controllers.StoreUser(user))
+	e.POST("/user-to-redis", controllers.StoreUserToRedis(user))
 	e.GET("/users", controllers.FindAllUsers(user))
 	e.GET("/user/:id", controllers.GetUserByID(user))
 
