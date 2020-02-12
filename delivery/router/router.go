@@ -2,8 +2,8 @@ package router
 
 import (
 	config "awawe/configuration"
+	"awawe/delivery/controllers"
 	"awawe/infrastucture/datastore"
-	"awawe/interface/controllers"
 	"awawe/registry"
 	"awawe/usecase/interactor"
 	"github.com/labstack/echo"

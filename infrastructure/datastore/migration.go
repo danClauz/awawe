@@ -33,11 +33,11 @@ func MigrateMySQLDatabase(db *sql.DB) {
 		if err := dbMigration.Up(); err != nil {
 			fmt.Errorf(err.Error())
 		}
-		fmt.Println("migrating database up")
+		log.Println("migrating database up")
 	} else {
 		if err := dbMigration.Steps(steps); err != nil {
 			fmt.Errorf(err.Error())
 		}
-		fmt.Printf("migrating database for %d step(s)", steps)
+		log.Printf("migrating database for %d step(s)", steps)
 	}
 }
