@@ -9,6 +9,7 @@ import (
 
 type postInteractor struct {
 	postRepository repository.PostRepository
+	userRepository repository.UserRepository
 	postPresenter  presenter.PostPresenter
 }
 
@@ -18,9 +19,10 @@ type PostInteractor interface {
 	FindAll(ctx context.Context) ([]*dto.Post, error)
 }
 
-func NewPostInteractor(r repository.PostRepository, p presenter.PostPresenter) PostInteractor {
+func NewPostInteractor(r repository.PostRepository, userRepository repository.UserRepository, p presenter.PostPresenter) PostInteractor {
 	return &postInteractor{
 		postRepository: r,
+		userRepository: userRepository,
 		postPresenter:  p,
 	}
 }
@@ -45,6 +47,12 @@ func (in *postInteractor) FindAll(ctx context.Context) ([]*dto.Post, error) {
 	posts, err := in.postRepository.FindAll(ctx)
 	if err != nil {
 		return nil, err
+	}
+
+	for _, post := range posts {
+		if post.User, err = in.userRepository.GetByID(ctx, int(post.UserID)); err != nil {
+			return nil, err
+		}
 	}
 
 	return in.postPresenter.ResponsePosts(posts), nil
