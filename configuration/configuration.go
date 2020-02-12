@@ -27,7 +27,7 @@ type (
 		Output   string `json:"output"`
 		Filename string `json:"filename"`
 	}
-	redis struct {
+	appRedis struct {
 		Address      string `json:"add"`
 		Password     string `json:"password"`
 		DB           int    `json:"db"`
@@ -42,7 +42,7 @@ var config = &struct {
 	Server      *server      `json:"server"`
 	MySQLConfig *mySQLConfig `json:"mysql_config"`
 	Logger      *logger      `json:"logger"`
-	Redis       *redis       `json:"redis"`
+	AppRedis    *appRedis    `json:"app_redis"`
 }{}
 
 func GetAppConfig() *app {
@@ -61,8 +61,8 @@ func GetLoggerConfig() *logger {
 	return config.Logger
 }
 
-func GetRedisConfig() *redis {
-	return config.Redis
+func GetRedisConfig() *appRedis {
+	return config.AppRedis
 }
 
 func InitializeConfig() {
