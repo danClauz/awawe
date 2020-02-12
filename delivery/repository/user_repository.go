@@ -2,28 +2,38 @@ package repository
 
 import (
 	"awawe/domain/model"
-	"awawe/infrastucture/redis"
+	iRedis "awawe/usecase/infrastructure/redis"
 	"awawe/usecase/repository"
 	"context"
 	"database/sql"
-	"encoding/json"
 )
 
 type userRepository struct {
 	db    *sql.DB
-	redis redis.Client
+	redis iRedis.SDK
 }
 
-func NewUserRepository(db *sql.DB, redis redis.Client) repository.UserRepository {
+func NewUserRepository(db *sql.DB, redis iRedis.SDK) repository.UserRepository {
 	return &userRepository{
 		db:    db,
 		redis: redis,
 	}
 }
 
+func (r *userRepository) Store(ctx context.Context, user *model.User) error {
+	if _, err := r.db.ExecContext(ctx, `
+		INSERT INTO users (username, first_name, last_name, email, password)
+		VALUES (?, ?, ?, ?, ?)
+	`, user.Username, user.FirstName, user.LastName, user.Email, user.Password);
+		err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *userRepository) StoreToRedis(ctx context.Context, user *model.User) error {
-	userData, _ := json.Marshal(user)
-	return r.redis.Set(user.TableName(), userData, 0)
+	return r.redis.Set(user.TableName(), user, 0)
 }
 
 func (r *userRepository) FindAll(ctx context.Context) ([]*model.User, error) {
