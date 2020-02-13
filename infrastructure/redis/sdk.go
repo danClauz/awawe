@@ -15,11 +15,8 @@ func (c *sdk) Ping() error {
 }
 
 func (c *sdk) Set(key string, value interface{}, expiration time.Duration) error {
-	if _, err := c.redisClient.Set(key, value.(string), expiration).Result(); err != nil {
-		return err
-	}
-
-	return nil
+	_, err := c.redisClient.Set(key, value.(string), expiration).Result()
+	return err
 }
 
 func (c *sdk) Get(key string) (interface{}, error) {

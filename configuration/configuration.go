@@ -31,9 +31,9 @@ type (
 		Address      string `json:"add"`
 		Password     string `json:"password"`
 		DB           int    `json:"db"`
-		PoolSize     int    `json:"pool_size"`
 		ReadTimeout  int    `json:"read_timeout"`
 		WriteTimeout int    `json:"write_timeout"`
+		PoolSize     int    `json:"pool_size"`
 	}
 )
 
