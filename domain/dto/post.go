@@ -10,7 +10,7 @@ type (
 		Content    string      `json:"content"`
 		CreatedAt  time.Time   `json:"created_at"`
 		UpdatedAt  time.Time   `json:"updated_at"`
-		User       *User       `json:"user,omitempty"`
+		User       *User       `json:"author,omitempty"`
 		Categories []*Category `json:"categories,omitempty"`
 		Tags       []*Tag      `json:"tags,omitempty"`
 		Comments   []*Comment  `json:"comments,omitempty"`
