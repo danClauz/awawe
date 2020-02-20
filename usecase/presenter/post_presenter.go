@@ -6,7 +6,8 @@ import (
 )
 
 type PostPresenter interface {
-	RequestToModel(post *dto.Post) *model.Post
+	StorePostToModel(post *dto.StorePost) *model.Post
+	UpdatePostToModel(post *dto.Post) *model.Post
 	ResponsePost(post *model.Post) *dto.Post
 	ResponsePosts(posts []*model.Post) []*dto.Post
 }

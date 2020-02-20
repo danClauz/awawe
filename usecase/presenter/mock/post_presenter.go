@@ -10,7 +10,12 @@ type PostPresenterMock struct {
 	mock.Mock
 }
 
-func (m *PostPresenterMock) RequestToModel(post *dto.Post) *model.Post {
+func (m *PostPresenterMock) StorePostToModel(post *dto.StorePost) *model.Post {
+	args := m.Called(post)
+	return args.Get(0).(*model.Post)
+}
+
+func (m *PostPresenterMock) UpdatePostToModel(post *dto.Post) *model.Post {
 	args := m.Called(post)
 	return args.Get(0).(*model.Post)
 }

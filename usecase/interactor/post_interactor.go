@@ -14,7 +14,7 @@ type postInteractor struct {
 }
 
 type PostInteractor interface {
-	Store(ctx context.Context, post *dto.Post) error
+	Store(ctx context.Context, post *dto.StorePost) error
 	Update(ctx context.Context, post *dto.Post) error
 	FindAll(ctx context.Context) ([]*dto.Post, error)
 }
@@ -27,8 +27,8 @@ func NewPostInteractor(r repository.PostRepository, userRepository repository.Us
 	}
 }
 
-func (in *postInteractor) Store(ctx context.Context, post *dto.Post) error {
-	if err := in.postRepository.Store(ctx, in.postPresenter.RequestToModel(post)); err != nil {
+func (in *postInteractor) Store(ctx context.Context, post *dto.StorePost) error {
+	if err := in.postRepository.Store(ctx, in.postPresenter.StorePostToModel(post)); err != nil {
 		return err
 	}
 
@@ -36,7 +36,7 @@ func (in *postInteractor) Store(ctx context.Context, post *dto.Post) error {
 }
 
 func (in *postInteractor) Update(ctx context.Context, post *dto.Post) error {
-	if err := in.postRepository.Update(ctx, in.postPresenter.RequestToModel(post)); err != nil {
+	if err := in.postRepository.Update(ctx, in.postPresenter.UpdatePostToModel(post)); err != nil {
 		return err
 	}
 

@@ -17,7 +17,15 @@ func NewPostPresenter() presenter.PostPresenter {
 	}
 }
 
-func (pre *postPresenter) RequestToModel(post *dto.Post) *model.Post {
+func (pre *postPresenter) StorePostToModel(post *dto.StorePost) *model.Post {
+	return &model.Post{
+		UserID:  post.UserID,
+		Title:   post.Title,
+		Content: post.Content,
+	}
+}
+
+func (pre *postPresenter) UpdatePostToModel(post *dto.Post) *model.Post {
 	return &model.Post{
 		ID:      post.ID,
 		UserID:  post.UserID,

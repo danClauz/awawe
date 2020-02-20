@@ -24,6 +24,7 @@ func (pre *userPresenter) RequestToModel(user *dto.User) *model.User {
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Email:     user.Email,
+		Password:  user.Password,
 	}
 }
 

@@ -15,6 +15,11 @@ func (m *UserRepositoryMock) Store(ctx context.Context, user *model.User) error 
 	return args.Error(0)
 }
 
+func (m *UserRepositoryMock) StoreToRedis(ctx context.Context, user *model.User) error {
+	args := m.Called(ctx, user)
+	return args.Error(0)
+}
+
 func (m *UserRepositoryMock) FindAll(ctx context.Context) ([]*model.User, error) {
 	args := m.Called(ctx)
 	return args.Get(0).([]*model.User), args.Error(1)

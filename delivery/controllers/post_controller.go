@@ -9,7 +9,7 @@ import (
 
 func StorePost(svc interactor.PostInteractor) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
-		post := new(dto.Post)
+		post := new(dto.StorePost)
 		if err := ctx.Bind(post); err != nil {
 			return err
 		}

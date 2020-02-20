@@ -15,4 +15,10 @@ type (
 		Tags       []*Tag      `json:"tags,omitempty"`
 		Comments   []*Comment  `json:"comments,omitempty"`
 	}
+
+	StorePost struct {
+		UserID  uint   `json:"user_id,omitempty"`
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
 )
